@@ -1,5 +1,6 @@
 package akshatmittal61;
 
+import akshatmittal61.routes.GetAllTasks;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
@@ -24,6 +25,8 @@ public class DwTasksApplication extends Application<DwTasksConfiguration> {
     public void run(final DwTasksConfiguration configuration,
                     final Environment environment) {
         // TODO: implement application
+        GetAllTasks getAllTasksRoute = new GetAllTasks();
+        environment.jersey().register(getAllTasksRoute);
     }
 
 }
