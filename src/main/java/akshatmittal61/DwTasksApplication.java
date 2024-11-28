@@ -1,6 +1,6 @@
 package akshatmittal61;
 
-import akshatmittal61.routes.GetAllTasks;
+import akshatmittal61.routes.Routes;
 import akshatmittal61.routes.HealthApi;
 import akshatmittal61.utils.Logger;
 import io.dropwizard.Application;
@@ -30,10 +30,10 @@ public class DwTasksApplication extends Application<DwTasksConfiguration> {
     public void run(final DwTasksConfiguration configuration,
                     final Environment environment) {
         // TODO: implement application
-        environment.jersey().register(new GetAllTasks());
         environment.healthChecks().register("Server", new HealthApi());
         final JdbiFactory factory = new JdbiFactory();
         final Jdbi jdbi =factory.build(environment, configuration.getDataSourceFactory(), "postgresql");
+        environment.jersey().register(new Routes(jdbi));
     }
 
 }
