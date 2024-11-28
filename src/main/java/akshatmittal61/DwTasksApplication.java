@@ -4,8 +4,10 @@ import akshatmittal61.routes.GetAllTasks;
 import akshatmittal61.routes.HealthApi;
 import akshatmittal61.utils.Logger;
 import io.dropwizard.Application;
+import io.dropwizard.jdbi3.JdbiFactory;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import org.jdbi.v3.core.Jdbi;
 
 public class DwTasksApplication extends Application<DwTasksConfiguration> {
 
@@ -30,6 +32,8 @@ public class DwTasksApplication extends Application<DwTasksConfiguration> {
         // TODO: implement application
         environment.jersey().register(new GetAllTasks());
         environment.healthChecks().register("Server", new HealthApi());
+        final JdbiFactory factory = new JdbiFactory();
+        final Jdbi jdbi =factory.build(environment, configuration.getDataSourceFactory(), "postgresql");
     }
 
 }
